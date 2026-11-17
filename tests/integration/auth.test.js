@@ -1,6 +1,6 @@
 const {
   startTestEnv, stopTestEnv, api, login, registerCustomer, createAdminUser,
-} = require('../helpers');
+} = require('../support');
 
 beforeAll(startTestEnv);
 afterAll(stopTestEnv);
@@ -25,7 +25,7 @@ describe('Auth', () => {
 
   it('rejects duplicate email and ignores role in registration payload', async () => {
     await registerCustomer({ name: 'Dup', email: 'dup@test.com' });
-    const dup = await api().post('/api/v1/auth/register').send({ name: 'X', email: 'dup@test.com', password: 'Passw0rd1' });
+    const dup = await api().post('/api/v1/auth/register').send({ name: 'Dup Two', email: 'dup@test.com', password: 'Passw0rd1' });
     expect(dup.status).toBe(409);
 
     const sneaky = await api().post('/api/v1/auth/register').send({ name: 'Sneaky', email: 's@test.com', password: 'Passw0rd1', role: 'admin' });

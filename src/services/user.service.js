@@ -46,7 +46,7 @@ const getById = async (id) => {
 
 const setActive = async (id, isActive, actor) => {
   if (actor.id === id && !isActive) throw ApiError.badRequest('You cannot deactivate your own account');
-  const user = await User.findByIdAndUpdate(id, { isActive }, { new: true });
+  const user = await User.findByIdAndUpdate(id, { isActive }, { returnDocument: 'after' });
   if (!user) throw ApiError.notFound('User not found');
   return user;
 };

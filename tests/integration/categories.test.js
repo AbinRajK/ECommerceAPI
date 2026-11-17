@@ -1,6 +1,6 @@
 const {
   startTestEnv, stopTestEnv, api, auth, createAdmin, createCategoryTree,
-} = require('../helpers');
+} = require('../support');
 
 let adminToken;
 let ids;

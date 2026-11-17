@@ -1,7 +1,7 @@
 const {
   startTestEnv, stopTestEnv, api, auth, registerCustomer, createAdmin,
   createCategoryTree, createProduct, stockOf, placeOrder, setOrderStatus,
-} = require('../helpers');
+} = require('../support');
 
 let adminToken;
 let customer;

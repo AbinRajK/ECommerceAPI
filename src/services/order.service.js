@@ -44,7 +44,7 @@ const create = async (userId, { items, shippingAddress }) => {
         const product = await Product.findOneAndUpdate(
           { _id: productId, status: PRODUCT_STATUS.ACTIVE, stock: { $gte: quantity } },
           { $inc: { stock: -quantity } },
-          { new: true, session: session || undefined }
+          { returnDocument: 'after', session: session || undefined }
         );
 
         if (!product) {
@@ -122,7 +122,7 @@ const updateStatus = async (id, newStatus, actor) =>
     const updated = await Order.findOneAndUpdate(
       { _id: id, status: order.status },
       { $set: { status: newStatus }, $push: { statusHistory: { status: newStatus, changedBy: actor._id, changedAt: new Date() } } },
-      { new: true, session: s }
+      { returnDocument: 'after', session: s }
     );
     if (!updated) throw ApiError.conflict('Order was modified by another request, please retry');
 

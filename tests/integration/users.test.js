@@ -1,6 +1,6 @@
 const {
   startTestEnv, stopTestEnv, api, auth, login, registerCustomer, createAdmin,
-} = require('../helpers');
+} = require('../support');
 
 let adminToken;
 let customer;

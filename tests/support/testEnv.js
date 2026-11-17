@@ -12,7 +12,10 @@ let app;
  */
 async function startTestEnv() {
   replSet = await MongoMemoryReplSet.create({ replSet: { count: 1 } });
-  await mongoose.connect(replSet.getUri());
+  // The driver loads Node's `os` module with a dynamic import(), which Jest's CommonJS
+  // sandbox can't do. Without this, the handshake is sent without the `driver` field and
+  // MongoDB rejects it ("Missing required sub-document 'driver'"). Passing `os` in avoids that.
+  await mongoose.connect(replSet.getUri(), { runtimeAdapters: { os: require('os') } });
   // Must be required after mongoose is connected.
   app = require('../../src/app');
   await Promise.all(Object.values(mongoose.models).map((m) => m.init()));
